@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Midnight Vault — a heist game</title>
+<script>
+  window.__errors = [];
+  window.addEventListener('error', (e) => window.__errors.push(String(e.message)));
+  window.addEventListener('unhandledrejection', (e) => window.__errors.push('rejection: ' + String(e.reason)));
+</script>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: #0a1416;
+    color: #eef6f3;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+  }
+  #hud {
+    width: 1200px;
+    max-width: 100vw;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 10px 14px;
+    background: #101d20;
+    border-bottom: 1px solid #24444a;
+    font-size: 15px;
+  }
+  #hud-level { font-weight: 700; white-space: nowrap; }
+  #alarm-wrap {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 220px;
+  }
+  #alarm-bar {
+    flex: 1;
+    height: 14px;
+    background: #0a1416;
+    border: 1px solid #24444a;
+    border-radius: 7px;
+    overflow: hidden;
+  }
+  #alarm-fill { height: 100%; width: 0%; background: #39d98a; transition: width 0.15s linear; }
+  #alarm-label { font-weight: 700; font-size: 13px; white-space: nowrap; }
+  .hud-stat { white-space: nowrap; color: #9db8b4; }
+  .hud-stat b { color: #eef6f3; font-weight: 600; }
+  #hud-mute {
+    background: none;
+    border: 1px solid #24444a;
+    color: #9db8b4;
+    border-radius: 6px;
+    padding: 4px 10px;
+    cursor: pointer;
+    font-size: 13px;
+  }
+  #hud-mute:hover { color: #eef6f3; border-color: #54707a; }
+  canvas {
+    display: block;
+    width: 1200px;
+    max-width: 100vw;
+    height: auto;
+    background: #1a2a2e;
+  }
+  #help {
+    width: 1200px;
+    max-width: 100vw;
+    padding: 8px 14px 14px;
+    color: #9db8b4;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  #help b { color: #eef6f3; }
+  #selftest {
+    white-space: pre-wrap;
+    font-family: ui-monospace, monospace;
+    font-size: 13px;
+    color: #9db8b4;
+    padding: 0 14px 14px;
+    width: 1200px;
+    max-width: 100vw;
+  }
+</style>
+</head>
+<body>
+  <div id="hud">
+    <span id="hud-level">The Midnight Vault</span>
+    <div id="alarm-wrap">
+      <span id="alarm-label">ALARM CALM 0</span>
+      <div id="alarm-bar"><div id="alarm-fill"></div></div>
+    </div>
+    <span class="hud-stat" id="hud-loot">Loot 0/6</span>
+    <span class="hud-stat" id="hud-score">Score 0</span>
+    <span class="hud-stat" id="hud-time">0:00</span>
+    <button id="hud-mute" type="button">Mute (M)</button>
+  </div>
+  <canvas id="game"></canvas>
+  <div id="help">
+    <b>WASD / arrows</b> move &nbsp;·&nbsp; <b>Shift</b> sneak (slower, harder to spot — cameras don't care)
+    &nbsp;·&nbsp; <b>Esc</b> pause &nbsp;·&nbsp; <b>M</b> mute.
+    Pocket every gold loot, then slip out the green <b>EXIT</b>. Hide behind display cases and statues —
+    they block sight. If the alarm hits 100, the vault locks down.
+  </div>
+  <div id="selftest"></div>
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>
